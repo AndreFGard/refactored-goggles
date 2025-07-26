@@ -5,6 +5,7 @@ import type { Config } from "tailwindcss"
 const config: Config = {
   darkMode: ["class"],
   content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,6 +15,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['"Spline Sans"', '"Noto Sans"', "sans-serif"],
+        "plus-jakarta": ['"Plus Jakarta Sans"', "sans-serif"],
+        noto: ['"Noto Sans"', "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
@@ -70,6 +73,10 @@ const config: Config = {
         "dark-card": "#293829",
         "accent-green": "#19e519",
         "text-muted": "#9db89d",
+        "green-bg": "#f8fcf8",
+        "green-dark": "#0e1b0e", 
+        "green-medium": "#4e974e",
+        "green-border": "#e7f3e7",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -102,18 +109,5 @@ const config: Config = {
   },
   plugins: [],
 }
+
 export default config
-
-// Cores customizadas
-colors: {
-  "green-bg": "#f8fcf8",
-  "green-dark": "#0e1b0e", 
-  "green-medium": "#4e974e",
-  "green-border": "#e7f3e7",
-}
-
-// Fontes
-fontFamily: {
-  "plus-jakarta": ['"Plus Jakarta Sans"', "sans-serif"],
-  noto: ['"Noto Sans"', "sans-serif"],
-}
