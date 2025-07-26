@@ -1,59 +1,68 @@
 "use client"
 
 import { useState } from "react"
+import { IconType } from "react-icons"
 import {
-  Code,
-  Settings,
-  Stethoscope,
-  Scale,
-  DollarSign,
-  Brain,
-  Palette,
-  Music,
-  ClubIcon as Football,
-  Cpu,
-  Lightbulb,
-  Briefcase,
-  Leaf,
-  Flag,
-  Users,
-  Home,
-  PlusSquare,
-  Bell,
-  User,
-  Search,
-} from "lucide-react"
+  FaCode,
+  FaBriefcase,
+  FaFootballBall,
+  FaDollarSign,
+  FaPalette,
+  FaMusic,
+  FaLeaf,
+  FaFlag,
+  FaUsers,
+} from "react-icons/fa"
+import {
+  MdEngineering,
+  MdLocalHospital,
+  MdBalance,
+  MdPsychology,
+  MdComputer,
+  MdLightbulb,
+  MdHome,
+  MdNotifications,
+  MdPerson,
+  MdAdd,
+} from "react-icons/md"
+import { FiSearch } from "react-icons/fi"
 
-const interests = [
-  { id: "cs", label: "Ciência da Computação", icon: Code },
-  { id: "engineering", label: "Engenharia", icon: Settings },
-  { id: "medicine", label: "Medicina", icon: Stethoscope },
-  { id: "law", label: "Direito", icon: Scale },
-  { id: "economics", label: "Economia", icon: DollarSign },
-  { id: "psychology", label: "Psicologia", icon: Brain },
-  { id: "arts", label: "Artes", icon: Palette },
-  { id: "music", label: "Música", icon: Music },
-  { id: "sports", label: "Esportes", icon: Football },
-  { id: "technology", label: "Tecnologia", icon: Cpu },
-  { id: "innovation", label: "Inovação", icon: Lightbulb },
-  { id: "entrepreneurship", label: "Empreendedorismo", icon: Briefcase },
-  { id: "sustainability", label: "Sustentabilidade", icon: Leaf },
-  { id: "politics", label: "Política", icon: Flag },
-  { id: "culture", label: "Cultura", icon: Users },
+interface Interest {
+  id: string
+  name: string
+  icon: IconType
+}
+
+const interests: Interest[] = [
+  { id: "cs", name: "Ciência da Computação", icon: FaCode },
+  { id: "engineering", name: "Engenharia", icon: MdEngineering },
+  { id: "medicine", name: "Medicina", icon: MdLocalHospital },
+  { id: "law", name: "Direito", icon: MdBalance },
+  { id: "economics", name: "Economia", icon: FaDollarSign },
+  { id: "psychology", name: "Psicologia", icon: MdPsychology },
+  { id: "arts", name: "Artes", icon: FaPalette },
+  { id: "music", name: "Música", icon: FaMusic },
+  { id: "sports", name: "Esportes", icon: FaFootballBall },
+  { id: "technology", name: "Tecnologia", icon: MdComputer },
+  { id: "innovation", name: "Inovação", icon: MdLightbulb },
+  { id: "entrepreneurship", name: "Empreendedorismo", icon: FaBriefcase },
+  { id: "sustainability", name: "Sustentabilidade", icon: FaLeaf },
+  { id: "politics", name: "Política", icon: FaFlag },
+  { id: "culture", name: "Cultura", icon: FaUsers },
 ]
 
 export function TagAddition() {
-  const [selectedInterests, setSelectedInterests] = useState([])
-  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState<string>("")
 
-  const toggleInterest = (interestId) => {
+  const toggleInterest = (interestId: string): void => {
     setSelectedInterests((prev) =>
       prev.includes(interestId) ? prev.filter((id) => id !== interestId) : [...prev, interestId],
     )
   }
 
   const filteredInterests = interests.filter((interest) =>
-    interest.label.toLowerCase().includes(searchQuery.toLowerCase()),
+    interest.name.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
@@ -99,7 +108,7 @@ export function TagAddition() {
                 }`}
               >
                 <Icon className="text-white" size={20} />
-                <p className="text-white text-sm font-medium leading-normal">{interest.label}</p>
+                <p className="text-white text-sm font-medium leading-normal">{interest.name}</p>
               </button>
             )
           })}
@@ -114,7 +123,7 @@ export function TagAddition() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#a190cb]" size={20} />
+            <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#a190cb]" size={20} />
           </div>
         </div>
       </div>
@@ -124,31 +133,31 @@ export function TagAddition() {
         <div className="flex gap-2 border-t border-[#2d2249] bg-[#201834] px-4 pb-3 pt-2">
           <a className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-white" href="#">
             <div className="text-white flex h-8 items-center justify-center">
-              <Home size={24} fill="currentColor" />
+              <MdHome size={24} />
             </div>
             <p className="text-white text-xs font-medium leading-normal tracking-[0.015em]">Início</p>
           </a>
           <a className="flex flex-1 flex-col items-center justify-end gap-1 text-[#a190cb]" href="#">
             <div className="text-[#a190cb] flex h-8 items-center justify-center">
-              <Users size={24} />
+              <FaUsers size={24} />
             </div>
             <p className="text-[#a190cb] text-xs font-medium leading-normal tracking-[0.015em]">Comunidades</p>
           </a>
           <a className="flex flex-1 flex-col items-center justify-end gap-1 text-[#a190cb]" href="#">
             <div className="text-[#a190cb] flex h-8 items-center justify-center">
-              <PlusSquare size={24} />
+              <MdAdd size={24} />
             </div>
             <p className="text-[#a190cb] text-xs font-medium leading-normal tracking-[0.015em]">Criar</p>
           </a>
           <a className="flex flex-1 flex-col items-center justify-end gap-1 text-[#a190cb]" href="#">
             <div className="text-[#a190cb] flex h-8 items-center justify-center">
-              <Bell size={24} />
+              <MdNotifications size={24} />
             </div>
             <p className="text-[#a190cb] text-xs font-medium leading-normal tracking-[0.015em]">Notificações</p>
           </a>
           <a className="flex flex-1 flex-col items-center justify-end gap-1 text-[#a190cb]" href="#">
             <div className="text-[#a190cb] flex h-8 items-center justify-center">
-              <User size={24} />
+              <MdPerson size={24} />
             </div>
             <p className="text-[#a190cb] text-xs font-medium leading-normal tracking-[0.015em]">Perfil</p>
           </a>
