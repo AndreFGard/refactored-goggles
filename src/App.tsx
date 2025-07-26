@@ -1,7 +1,7 @@
 import { TagAddition } from './pages/tag-addition.tsx'
-
+import {EventViewPage} from './pages/EventView.tsx'
 function App() {
-  return <TagAddition />
+  return <EventViewPage />
 }
 
 export default App

@@ -2,7 +2,7 @@
 
 import { ArrowLeft, Calendar } from "lucide-react"
 
-export default function EventoPage() {
+export function EventViewPage() {
   const participants = [
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAZ3K-xFUxhWOUoILCsBWm02rthtvBmgxoy_mrQrce5MT5Y5lfsZpIPEfS-6CMo87HwAY9pVn7qVEjIa5Gsr181PDcrWN-Z62GuiAknjPUPLPIX7ehmJUpPb1AoGp0DhcsXGTttj9SFoMm00RSIsHLUcE0JTTAv2wjMVUli76UDMJMXOwA9owC-qYYnnHruggi7b6iOAHcpCjqhs-S2l2p-cXenptf_ffW3IdA1jq4VsbzNDX1kKOevWT6aeFTPLT3RAoN-CtMz6FbF",
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCgg02oQONjw4fw_kkWMqOVNQ7n4Y-HfMDvU_FDM3jzTV7-jgb8IR5iNjHRkQzWaHYCyJ3NhZgCkyz3BfQ7_1OlfTggVsCGa6NhT29U2F9Rmx3VtHkgjp8fklyQAycRy5JX7DCdnCTEvY3FgNQC4oLwCU_2ho2B-Qnhl6w9eWCdsfwbNx5-6BOIF8TeE9V3XEi9N_cGEgEFVuV1RweKxS9c2Ti2UdN0FHemyPuQOk70Nxhnvv3NlVMCNvRIsZYYBNH7oFyH3f1-qE83",
