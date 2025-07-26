@@ -66,10 +66,10 @@ export function TagAddition() {
   )
 
   return (
-    <div className="relative flex size-full min-h-screen flex-col bg-[#161023] justify-between font-['Spline_Sans','Noto_Sans',sans-serif]">
+    <div className="flex flex-col justify-between min-h-screen">
       {/* Header */}
       <div>
-        <div className="flex items-center bg-[#161023] p-4 pb-2 justify-between">
+        <div className="flex items-center p-4 pb-2 justify-between">
           <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">
             Interesses
           </h2>
@@ -84,7 +84,7 @@ export function TagAddition() {
             </button>
           </div>
         </div>
-
+        
         {/* Title and Description */}
         <h2 className="text-white tracking-light text-[28px] font-bold leading-tight px-4 text-center pb-3 pt-5">
           O que te interessa?
@@ -92,13 +92,12 @@ export function TagAddition() {
         <p className="text-white text-base font-normal leading-normal pb-3 pt-1 px-4 text-center">
           Selecione pelo menos 3 interesses para começar a ver conteúdo relevante.
         </p>
-
+        
         {/* Interest Tags */}
         <div className="flex gap-3 p-3 flex-wrap pr-4">
           {filteredInterests.map((interest) => {
             const Icon = interest.icon
             const isSelected = selectedInterests.includes(interest.id)
-
             return (
               <button
                 key={interest.id}
@@ -113,9 +112,9 @@ export function TagAddition() {
             )
           })}
         </div>
-
+        
         {/* Search Input */}
-        <div className="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <div className="flex flex-wrap items-end gap-4 px-4 py-3">
           <div className="flex flex-col min-w-40 flex-1 relative">
             <input
               placeholder="Buscar interesses"
@@ -127,7 +126,7 @@ export function TagAddition() {
           </div>
         </div>
       </div>
-
+      
       {/* Bottom Navigation */}
       <div>
         <div className="flex gap-2 border-t border-[#2d2249] bg-[#201834] px-4 pb-3 pt-2">
