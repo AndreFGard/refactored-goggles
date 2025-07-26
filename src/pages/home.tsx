@@ -1,5 +1,6 @@
 import type React from "react"
-import { MagnifyingGlass, House, Users, PlusSquare, Bell, User } from "@phosphor-icons/react"
+import { MagnifyingGlass } from "@phosphor-icons/react"
+import { useNavigate } from "react-router-dom"
 
 // Dados dos grupos/eventos
 const myGroups = [
@@ -52,13 +53,22 @@ const suggestedGroups = [
 
 // Componente do Header
 const Header: React.FC = () => {
+  const navigate = useNavigate()
+
+  const handleSearchClick = () => {
+    navigate('/signup')
+  }
+
   return (
     <div className="flex items-center bg-[#f8fcf8] p-4 pb-2 justify-between">
       <h2 className="text-[#0e1b0e] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">
         Eventos e Grupos
       </h2>
       <div className="flex w-12 items-center justify-end">
-        <button className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-[#0e1b0e] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+        <button 
+          onClick={handleSearchClick}
+          className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-[#0e1b0e] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
+        >
           <MagnifyingGlass size={24} weight="regular" />
         </button>
       </div>
@@ -114,57 +124,16 @@ const GroupSection: React.FC<GroupSectionProps> = ({ title, groups }) => {
   )
 }
 
-// Componente do Item de Navegação
-interface NavItemProps {
-  icon: React.ReactNode
-  label: string
-  isActive?: boolean
-  href: string
-}
-
-const NavItem: React.FC<NavItemProps> = ({ icon, label, isActive = false, href }) => {
-  const textColor = isActive ? "text-[#0e1b0e]" : "text-[#4e974e]"
-
-  return (
-    <a
-      className={`just flex flex-1 flex-col items-center justify-end gap-1 ${isActive ? "rounded-full" : ""} ${textColor}`}
-      href={href}
-    >
-      <div className={`${textColor} flex h-8 items-center justify-center`}>{icon}</div>
-      <p className={`${textColor} text-xs font-medium leading-normal tracking-[0.015em]`}>{label}</p>
-    </a>
-  )
-}
-
-// Componente da Navegação Inferior
-const BottomNavigation: React.FC = () => {
-  return (
-    <div>
-      <div className="flex gap-2 border-t border-[#e7f3e7] bg-[#f8fcf8] px-4 pb-3 pt-2">
-        <NavItem icon={<House size={24} weight="regular" />} label="Início" href="#" />
-        <NavItem icon={<Users size={24} weight="fill" />} label="Comunidades" isActive={true} href="#" />
-        <NavItem icon={<PlusSquare size={24} weight="regular" />} label="Criar" href="#" />
-        <NavItem icon={<Bell size={24} weight="regular" />} label="Notificações" href="#" />
-        <NavItem icon={<User size={24} weight="regular" />} label="Perfil" href="#" />
-      </div>
-      <div className="h-5 bg-[#f8fcf8]" />
-    </div>
-  )
-}
-
 // Componente Principal
 const Home: React.FC = () => {
   return (
     <div
-      className="relative flex size-full min-h-screen flex-col bg-[#f8fcf8] justify-between group/design-root overflow-x-hidden"
+      className="relative flex size-full min-h-screen flex-col bg-[#f8fcf8] group/design-root overflow-x-hidden"
       style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
     >
-      <div>
-        <Header />
-        <GroupSection title="Meus Grupos/Eventos" groups={myGroups} />
-        <GroupSection title="Sugeridos" groups={suggestedGroups} />
-      </div>
-      <BottomNavigation />
+      <Header />
+      <GroupSection title="Meus Grupos/Eventos" groups={myGroups} />
+      <GroupSection title="Sugeridos" groups={suggestedGroups} />
     </div>
   )
 }
