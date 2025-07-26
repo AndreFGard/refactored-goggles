@@ -2,6 +2,7 @@ import { Layout } from './components/Layout.tsx'
 import { TagAddition } from './pages/tag-addition.tsx'
 import Home  from './pages/home.tsx'
 import { EventViewPage } from './pages/EventView.tsx'
+import { LoginView } from './pages/loginVIew.tsx'
 function App() {
   return (<>
       <Layout>
@@ -12,6 +13,9 @@ function App() {
       </Layout>
       <Layout>
         <Home />
+      </Layout>
+      <Layout>
+        <LoginView/>
       </Layout>
     </>
   )
