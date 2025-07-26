@@ -103,3 +103,17 @@ const config: Config = {
   plugins: [],
 }
 export default config
+
+// Cores customizadas
+colors: {
+  "green-bg": "#f8fcf8",
+  "green-dark": "#0e1b0e", 
+  "green-medium": "#4e974e",
+  "green-border": "#e7f3e7",
+}
+
+// Fontes
+fontFamily: {
+  "plus-jakarta": ['"Plus Jakarta Sans"', "sans-serif"],
+  noto: ['"Noto Sans"', "sans-serif"],
+}
