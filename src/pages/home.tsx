@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 import type { NextPage } from "next"
-import { MagnifyingGlass, House, Users, PlusSquare, Bell, User } from "@phosphor-icons/react"
+import { MagnifyingGlass } from "@phosphor-icons/react"
+import TopNavigation from "../components/TopNavigation"
 
 // Dados dos grupos/eventos
 const myGroups = [
@@ -51,200 +52,70 @@ const suggestedGroups = [
 	},
 ]
 
-// Componente do Header
-const Header = ({ searchTerm, onSearchChange }) => {
-	const [isSearchOpen, setIsSearchOpen] = useState(false)
-
-	return (
-		<div className="flex items-center bg-[#111811] p-4 pb-2 justify-between">
-			<h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">
-				Eventos e Grupos
-			</h2>
-			<div className="flex w-12 items-center justify-end">
-				<button
-					onClick={() => setIsSearchOpen(!isSearchOpen)}
-					className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
-				>
-					<MagnifyingGlass size={24} weight="regular" />
-				</button>
-			</div>
-			{isSearchOpen && (
-				<div className="absolute top-16 left-4 right-4 bg-[#293829] border border-[#9db89d] rounded-lg shadow-lg p-3 z-10">
-					<input
-						type="text"
-						placeholder="Buscar grupos..."
-						value={searchTerm}
-						onChange={(e) => onSearchChange(e.target.value)}
-						className="w-full px-3 py-2 border border-[#9db89d] rounded-md focus:outline-none focus:ring-2 focus:ring-[#19e519] focus:border-transparent bg-[#111811] text-white placeholder:text-[#9db89d]"
-						autoFocus
-					/>
-				</div>
-			)}
-		</div>
-	)
-}
-
 // Componente do Card de Grupo
 interface GroupCardProps {
-	name: string
-	members: string
-	image: string
+  name: string
+  members: string
+  image: string
 }
 
 const GroupCard: React.FC<GroupCardProps> = ({ name, members, image }) => {
-	return (
-		<div className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-			<div
-				className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl flex flex-col"
-				style={{ backgroundImage: `url("${image}")` }}
-			/>
-			<div>
-				<p className="text-white text-base font-medium leading-normal">
-					{name}
-				</p>
-				<p className="text-[#9db89d] text-sm font-normal leading-normal">
-					{members}
-				</p>
-			</div>
-		</div>
-	)
+  return (
+    <div className="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
+      <div
+        className="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl flex flex-col"
+        style={{ backgroundImage: `url("${image}")` }}
+      />
+      <div>
+        <p className="text-white text-base font-medium leading-normal">{name}</p>
+        <p className="text-[#9db89d] text-sm font-normal leading-normal">{members}</p>
+      </div>
+    </div>
+  )
 }
 
 // Componente da Seção de Grupos
 interface GroupSectionProps {
-	title: string
-	groups: Array<{
-		id: number
-		name: string
-		members: string
-		image: string
-	}>
+  title: string
+  groups: Array<{
+    id: number
+    name: string
+    members: string
+    image: string
+  }>
 }
 
 const GroupSection: React.FC<GroupSectionProps> = ({ title, groups }) => {
-	return (
-		<>
-			<h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-				{title}
-			</h2>
-			<div className="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-				<div className="flex items-stretch p-4 gap-3">
-					{groups.map((group) => (
-						<GroupCard
-							key={group.id}
-							name={group.name}
-							members={group.members}
-							image={group.image}
-						/>
-					))}
-				</div>
-			</div>
-		</>
-	)
-}
-
-// Componente do Item de Navegação
-interface NavItemProps {
-	icon: React.ReactNode
-	label: string
-	isActive?: boolean
-	href: string
-}
-
-const NavItem: React.FC<NavItemProps> = ({
-	icon,
-	label,
-	isActive = false,
-	href,
-}) => {
-	const textColor = isActive ? "text-[#19e519]" : "text-[#9db89d]"
-
-	return (
-		<a
-			className={`just flex flex-1 flex-col items-center justify-end gap-1 ${
-				isActive ? "rounded-full" : ""
-			} ${textColor}`}
-			href={href}
-		>
-			<div className={`${textColor} flex h-8 items-center justify-center`}>
-				{icon}
-			</div>
-			<p
-				className={`${textColor} text-xs font-medium leading-normal tracking-[0.015em]`}
-			>
-				{label}
-			</p>
-		</a>
-	)
-}
-
-// Componente da Navegação Inferior
-const BottomNavigation: React.FC = () => {
-	return (
-		<div>
-			<div className="flex gap-2 border-t border-[#293829] bg-[#111811] px-4 pb-3 pt-2">
-				<NavItem
-					icon={<House size={24} weight="regular" />}
-					label="Início"
-					href="#"
-				/>
-				<NavItem
-					icon={<Users size={24} weight="fill" />}
-					label="Comunidades"
-					isActive={true}
-					href="#"
-				/>
-				<NavItem
-					icon={<PlusSquare size={24} weight="regular" />}
-					label="Criar"
-					href="#"
-				/>
-				<NavItem
-					icon={<Bell size={24} weight="regular" />}
-					label="Notificações"
-					href="#"
-				/>
-				<NavItem
-					icon={<User size={24} weight="regular" />}
-					label="Perfil"
-					href="#"
-				/>
-			</div>
-			<div className="h-5 bg-[#111811]" />
-		</div>
-	)
+  return (
+    <>
+      <h2 className="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">{title}</h2>
+      <div className="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex items-stretch p-4 gap-3">
+          {groups.map((group) => (
+            <GroupCard key={group.id} name={group.name} members={group.members} image={group.image} />
+          ))}
+        </div>
+      </div>
+    </>
+  )
 }
 
 // Componente Principal
-const Home: NextPage = () => {
-	const [searchTerm, setSearchTerm] = useState("")
-
-	const filterGroups = (groups) => {
-		if (!searchTerm) return groups
-		return groups.filter((group) =>
-			group.name.toLowerCase().includes(searchTerm.toLowerCase())
-		)
-	}
-
-	const filteredMyGroups = filterGroups(myGroups)
-	const filteredSuggestedGroups = filterGroups(suggestedGroups)
-
-	return (
-		<div
-			className="relative flex size-full min-h-screen flex-col bg-[#111811] justify-between group/design-root overflow-x-hidden"
-			style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
-		>
-			<div>
-				<Header
-					searchTerm={searchTerm}
-					onSearchChange={setSearchTerm}
-				/>
-				<GroupSection title="Meus Grupos/Eventos" groups={filteredMyGroups} />
-				<GroupSection title="Sugeridos" groups={filteredSuggestedGroups} />
-			</div>
-			<BottomNavigation />
-		</div>
-	)
+const Home: React.FC = () => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <TopNavigation 
+        title="Eventos e Grupos" 
+        showSearchButton={true}
+        onSearchClick={() => console.log('Search clicked')}
+      />
+      
+      <div className="flex-1">
+        <GroupSection title="Meus Grupos/Eventos" groups={myGroups} />
+        <GroupSection title="Sugeridos" groups={suggestedGroups} />
+      </div>
+    </div>
+  )
 }
 
 export default Home

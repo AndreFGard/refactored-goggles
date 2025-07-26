@@ -1,14 +1,7 @@
 "use client";
 
 import type React from "react";
-import {
-  ArrowLeft,
-  House,
-  Users,
-  PlusSquare,
-  Bell,
-  User,
-} from "@phosphor-icons/react";
+import TopNavigation from "../components/TopNavigation";
 
 // Dados do perfil
 const profileData = {
@@ -44,23 +37,6 @@ const pastEvents = [
       "https://lh3.googleusercontent.com/aida-public/AB6AXuDASEM2oHVczt3oG4sRLGS623RpnHGJJouEKuX3--5Nvt0_ebe1mcK_TY-u1F4ml6qFa7CZqCtT0Btn7G5fxwW5yywjoq1hHj8qa6endO1NZxbTkwvH794_lcAaGjGMAveDin8RYd7ovtFAucHirxccvj1hlLB58v33M9BY7aU0Es0UZHmElSJowPkpLVqfq41fOHxUA1ayet8h7GY_sBzNQMAYiDVOBPsoFs078Hkee5mB0UxaP99isUwie7Xy9-5rcfp_C-QiEw",
   },
 ];
-
-// Componente do Header do Perfil
-const ProfileHeader: React.FC<{ onBack: () => void }> = ({ onBack }) => {
-  return (
-    <div className="flex items-center bg-[#111811] p-4 pb-2 justify-between">
-      <button
-        onClick={onBack}
-        className="text-white flex size-12 shrink-0 items-center justify-center cursor-pointer"
-      >
-        <ArrowLeft size={24} weight="regular" />
-      </button>
-      <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">
-        Perfil
-      </h2>
-    </div>
-  );
-};
 
 // Componente de Informações do Perfil
 const ProfileInfo: React.FC = () => {
@@ -194,98 +170,13 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
   );
 };
 
-// Componente do Item de Navegação
-interface NavItemProps {
-  icon: React.ReactNode;
-  label: string;
-  isActive?: boolean;
-  href: string;
-  onClick?: () => void;
-}
-
-const NavItem: React.FC<NavItemProps> = ({
-  icon,
-  label,
-  isActive = false,
-  href,
-  onClick,
-}) => {
-  const textColor = isActive ? "text-[#19e519]" : "text-[#9db89d]";
-
-  return (
-    <a
-      className={`just flex flex-1 flex-col items-center justify-end gap-1 ${
-        isActive ? "rounded-full" : ""
-      } ${textColor} cursor-pointer`}
-      href={href}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick?.();
-      }}
-    >
-      <div className={`${textColor} flex h-8 items-center justify-center`}>
-        {icon}
-      </div>
-      <p
-        className={`${textColor} text-xs font-medium leading-normal tracking-[0.015em]`}
-      >
-        {label}
-      </p>
-    </a>
-  );
-};
-
-// Componente da Navegação Inferior
-const BottomNavigation: React.FC<{ onNavigateHome: () => void }> = ({
-  onNavigateHome,
-}) => {
-  return (
-    <div>
-      <div className="flex gap-2 border-t border-[#293829] bg-[#111811] px-4 pb-3 pt-2">
-        <NavItem
-          icon={<House size={24} weight="regular" />}
-          label="Início"
-          href="#"
-          onClick={onNavigateHome}
-        />
-        <NavItem
-          icon={<Users size={24} weight="regular" />}
-          label="Comunidades"
-          href="#"
-        />
-        <NavItem
-          icon={<PlusSquare size={24} weight="regular" />}
-          label="Criar"
-          href="#"
-        />
-        <NavItem
-          icon={<Bell size={24} weight="regular" />}
-          label="Notificações"
-          href="#"
-        />
-        <NavItem
-          icon={<User size={24} weight="fill" />}
-          label="Perfil"
-          href="#"
-          isActive={true}
-        />
-      </div>
-      <div className="h-5 bg-[#111811]" />
-    </div>
-  );
-};
-
 // Componente Principal da Página de Perfil
-const ProfilePage: React.FC<{ onNavigateHome: () => void }> = ({
-  onNavigateHome,
-}) => {
+const ProfilePage: React.FC = () => {
   return (
-    <div
-      className="relative flex size-full min-h-screen flex-col bg-[#111811] justify-between group/design-root overflow-x-hidden"
-      style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
-    >
-      <div>
-        <ProfileHeader onBack={onNavigateHome} />
+    <div className="flex flex-col min-h-screen">
+      <TopNavigation title="Perfil" showBackButton={true} />
+
+      <div className="flex-1">
         <ProfileInfo />
         <ProfileStats />
         <ProfileTabs />
@@ -304,7 +195,6 @@ const ProfilePage: React.FC<{ onNavigateHome: () => void }> = ({
           <EventCard key={event.id} event={event} />
         ))}
       </div>
-      <BottomNavigation onNavigateHome={onNavigateHome} />
     </div>
   );
 };
