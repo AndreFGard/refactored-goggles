@@ -2,8 +2,9 @@
 
 import type React from "react";
 import { useState } from "react";
-import TopNavigation from "../components/TopNavigation";
 import {
+  ArrowLeft,
+  MagnifyingGlass,
   House,
   Users,
   PlusSquare,
@@ -49,16 +50,59 @@ const eventsData = [
 
 const tags = ["Esportes", "Música", "Acadêmico", "Social", "Voluntariado"];
 
+// Componente do Header de Eventos
+const EventsHeader: React.FC<{
+  onBack: () => void;
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
+}> = ({ onBack, searchTerm, onSearchChange }) => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  return (
+    <div className="flex items-center bg-white p-4 pb-2 justify-between">
+      <button
+        onClick={onBack}
+        className="text-[#121612] flex size-12 shrink-0 items-center justify-center cursor-pointer"
+      >
+        <ArrowLeft size={24} weight="regular" />
+      </button>
+      <h2 className="text-[#121612] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+        Eventos
+      </h2>
+      <div className="flex w-12 items-center justify-end">
+        <button
+          onClick={() => setIsSearchOpen(!isSearchOpen)}
+          className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-[#121612] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
+        >
+          <MagnifyingGlass size={24} weight="regular" />
+        </button>
+      </div>
+      {isSearchOpen && (
+        <div className="absolute top-16 left-4 right-4 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-10">
+          <input
+            type="text"
+            placeholder="Buscar eventos..."
+            value={searchTerm}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#121612] focus:border-transparent"
+            autoFocus
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Componente de Abas
 const EventsTabs: React.FC = () => {
   return (
     <div className="pb-3">
-      <div className="flex border-b border-[#293829] px-4 gap-8">
+      <div className="flex border-b border-[#dde3dd] px-4 gap-8">
         <a
-          className="flex flex-col items-center justify-center border-b-[3px] border-b-[#19e519] text-white pb-[13px] pt-4"
+          className="flex flex-col items-center justify-center border-b-[3px] border-b-[#121612] text-[#121612] pb-[13px] pt-4"
           href="#"
         >
-          <p className="text-white text-sm font-bold leading-normal tracking-[0.015em]">
+          <p className="text-[#121612] text-sm font-bold leading-normal tracking-[0.015em]">
             Tags
           </p>
         </a>
@@ -82,8 +126,8 @@ const FilterTags: React.FC<{
             onClick={() => onTagToggle(tag)}
             className={`flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full pl-4 pr-4 cursor-pointer transition-colors ${
               isSelected
-                ? "bg-[#19e519] text-[#111811]"
-                : "bg-[#293829] hover:bg-[#3d4d3d] text-white"
+                ? "bg-[#121612] text-white"
+                : "bg-[#f1f4f1] hover:bg-[#e8ebe8] text-[#121612]"
             }`}
           >
             <p className="text-sm font-medium leading-normal">{tag}</p>
@@ -107,16 +151,16 @@ interface EventItemProps {
 
 const EventItem: React.FC<EventItemProps> = ({ event }) => {
   return (
-    <div className="flex items-center gap-4 bg-[#111811] px-4 min-h-[72px] py-2 cursor-pointer hover:bg-[#293829] transition-colors">
+    <div className="flex items-center gap-4 bg-white px-4 min-h-[72px] py-2 cursor-pointer hover:bg-gray-50 transition-colors">
       <div
         className="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14 flex-shrink-0"
         style={{ backgroundImage: `url("${event.image}")` }}
       />
       <div className="flex flex-col justify-center flex-1">
-        <p className="text-white text-base font-medium leading-normal line-clamp-1">
+        <p className="text-[#121612] text-base font-medium leading-normal line-clamp-1">
           {event.title}
         </p>
-        <p className="text-[#9db89d] text-sm font-normal leading-normal line-clamp-2">
+        <p className="text-[#6a816a] text-sm font-normal leading-normal line-clamp-2">
           {event.date}
         </p>
       </div>
@@ -124,11 +168,96 @@ const EventItem: React.FC<EventItemProps> = ({ event }) => {
   );
 };
 
+// Componente do Item de Navegação
+interface NavItemProps {
+  icon: React.ReactNode;
+  label: string;
+  isActive?: boolean;
+  href: string;
+  onClick?: () => void;
+}
+
+const NavItem: React.FC<NavItemProps> = ({
+  icon,
+  label,
+  isActive = false,
+  href,
+  onClick,
+}) => {
+  const textColor = isActive ? "text-[#121612]" : "text-[#6a816a]";
+
+  return (
+    <a
+      className={`just flex flex-1 flex-col items-center justify-end gap-1 ${
+        isActive ? "rounded-full" : ""
+      } ${textColor} cursor-pointer`}
+      href={href}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick?.();
+      }}
+    >
+      <div className={`${textColor} flex h-8 items-center justify-center`}>
+        {icon}
+      </div>
+      <p
+        className={`${textColor} text-xs font-medium leading-normal tracking-[0.015em]`}
+      >
+        {label}
+      </p>
+    </a>
+  );
+};
+
+// Componente da Navegação Inferior
+const BottomNavigation: React.FC<{
+  onNavigateHome: () => void;
+  onNavigateProfile: () => void;
+}> = ({ onNavigateHome, onNavigateProfile }) => {
+  return (
+    <div>
+      <div className="flex gap-2 border-t border-[#f1f4f1] bg-white px-4 pb-3 pt-2">
+        <NavItem
+          icon={<House size={24} weight="fill" />}
+          label="Início"
+          href="#"
+          onClick={onNavigateHome}
+          isActive={true}
+        />
+        <NavItem
+          icon={<Users size={24} weight="regular" />}
+          label="Comunidades"
+          href="#"
+        />
+        <NavItem
+          icon={<PlusSquare size={24} weight="regular" />}
+          label="Criar"
+          href="#"
+        />
+        <NavItem
+          icon={<Bell size={24} weight="regular" />}
+          label="Notificações"
+          href="#"
+        />
+        <NavItem
+          icon={<User size={24} weight="regular" />}
+          label="Perfil"
+          href="#"
+          onClick={onNavigateProfile}
+        />
+      </div>
+      <div className="h-5 bg-white" />
+    </div>
+  );
+};
+
 // Componente Principal da Página de Eventos
-const EventsPage: React.FC = () => {
+const EventsPage: React.FC<{
+  onNavigateHome: () => void;
+  onNavigateProfile: () => void;
+}> = ({ onNavigateHome, onNavigateProfile }) => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleTagToggle = (tag: string) => {
     setSelectedTags((prev) =>
@@ -147,28 +276,16 @@ const EventsPage: React.FC = () => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <TopNavigation 
-        title="Eventos" 
-        showBackButton={true}
-        showSearchButton={true}
-        onSearchClick={() => setIsSearchOpen(!isSearchOpen)}
-      />
-      
-      {isSearchOpen && (
-        <div className="px-4 py-3 bg-[#111811]">
-          <input
-            type="text"
-            placeholder="Buscar eventos..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-3 py-2 border border-[#293829] bg-[#293829] text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#19e519] focus:border-transparent placeholder:text-[#9db89d]"
-            autoFocus
-          />
-        </div>
-      )}
-
-      <div className="flex-1">
+    <div
+      className="relative flex size-full min-h-screen flex-col bg-white justify-between group/design-root overflow-x-hidden"
+      style={{ fontFamily: '"Plus Jakarta Sans", "Noto Sans", sans-serif' }}
+    >
+      <div>
+        <EventsHeader
+          onBack={onNavigateHome}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+        />
         <EventsTabs />
         <FilterTags selectedTags={selectedTags} onTagToggle={handleTagToggle} />
         <div className="flex flex-col">
@@ -177,6 +294,10 @@ const EventsPage: React.FC = () => {
           ))}
         </div>
       </div>
+      <BottomNavigation
+        onNavigateHome={onNavigateHome}
+        onNavigateProfile={onNavigateProfile}
+      />
     </div>
   );
 };

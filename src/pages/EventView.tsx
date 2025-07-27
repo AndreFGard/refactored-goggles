@@ -1,7 +1,6 @@
 "use client"
 
-import { Calendar } from "lucide-react"
-import TopNavigation from "../components/TopNavigation"
+import { ArrowLeft, Calendar } from "lucide-react"
 
 export function EventViewPage() {
   const participants = [
@@ -15,8 +14,16 @@ export function EventViewPage() {
   const tags = ["Engenharia", "LGBTQ+", "Mulheres na STEM"]
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <TopNavigation title="Evento" showBackButton={true} />
+    <div className="relative flex min-h-screen flex-col bg-[#111811] text-white font-sans">
+      {/* Header */}
+      <div className="flex items-center bg-[#111811] p-4 pb-2 justify-between">
+        <div className="text-white flex size-12 shrink-0 items-center">
+          <ArrowLeft size={24} />
+        </div>
+        <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">
+          Evento
+        </h2>
+      </div>
 
       <div className="flex-1">
         {/* Hero Image */}
